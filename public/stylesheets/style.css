@@ -24,7 +24,7 @@ textarea { overflow: auto; }
 .left, .alignleft { float: left; display: inline; }
 .right, .alignright { float: right; display: inline; }
 
-.shell { width: 884px; margin: 0 auto; background: url(images/shell.png) repeat-y 0 0; padding: 0 57px 0 57px; position: relative; }
+.shell { width: 950px; margin: 0 auto; background: url(images/shell.png) repeat-y 0 0; padding: 0 57px 0 57px; position: relative; }
 
 #header { padding-top: 30px; }
 
@@ -69,7 +69,7 @@ textarea { overflow: auto; }
 
 #main { padding-top: 51px; padding-bottom: 41px; z-index: 1; }
 
-#sidebar { float: left; display: inline; width: 214px; padding: 6px 0; }
+#sidebar { float: left; display: inline; width: 200px; padding: 6px 0; }
 #sidebar h4 { border-bottom: solid 4px #eaeaea; padding: 0 0 8px 1px; }
 
 #sidebar .categories { list-style: none; }
