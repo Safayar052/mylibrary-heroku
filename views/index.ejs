@@ -1,0 +1,166 @@
+<html ng-app="app">
+<head>
+  <title>My Books</title>
+</head>
+<body>
+
+<ng-view></ng-view>
+
+<!-- Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+
+<!-- Template -->
+<!--
+<script type="text/ng-template" id="/todos.html">
+  Search: <input type="text" ng-model="search.name">
+  <ul>
+    <li ng-repeat="todo in todos | filter: search">
+      <input type="checkbox" ng-model="todo.completed" ng-change="update($index)">
+      <a ng-show="!editing[$index]" href="#/{{todo._id}}">{{todo.name}}</a>
+      <button ng-show="!editing[$index]" ng-click="edit($index)">edit</button>
+      <input ng-show="editing[$index]" type="text" ng-model="todo.name">
+      <button ng-show="editing[$index]" ng-click="update($index)">Update</button>
+      <button ng-show="editing[$index]" ng-click="cancel($index)">Cancel</button>
+	  <button ng-show="!editing[$index]" ng-click="remove($index)">remove</button>
+    </li>
+  </ul>
+  New task <input type="text" ng-model="newTodo"><button ng-click="save()">Create</button>
+</script>
+-->
+
+<script type="text/ng-template" id="/books.html">
+  <div class="container">
+	<div class="left-panel">
+		<ul>
+			<li ng-repeat="genre in genres">
+			  <a href="#/books/genre/{{genre}}">{{genre}}</a>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="content">
+		Search: <input type="text" ng-model="search.name">
+		<ul>
+			<li ng-repeat="book in books | filter: search">
+			  <input type="checkbox" ng-model="book.isread" ng-change="update($index)">
+			  <a ng-show="!editing[$index]" href="#/{{book._id}}">{{book.name}}</a>
+			</li>
+		</ul>
+	</div>
+  </div>
+</script>
+
+
+<script type="text/ng-template" id="/bookDetails.html">
+  <h1>{{ book.name }}</h1>
+  Already read: <input type="checkbox" ng-model="book.isread"><br>
+  Writers: <input ng-model="book.writers"><br>
+  Language: <input ng-model="book.language"><br>
+  Genre: <input ng-model="book.genre"><br>
+  Tags: {{ book.genre }}<br><br>
+  <button ng-click="update()">Update</button>
+  <button ng-click="remove()">Remove</button>
+  <a href="/">Cancel</a>
+</script>
+
+<script>
+  angular.module('app', ['ngRoute', 'ngResource'])
+
+    //---------------
+    // Services
+    //---------------
+		
+		.factory('Books', ['$resource', function($resource){
+          return $resource('/books/:id', null);
+        }])
+		
+		.factory('BooksGenre', ['$resource', function($resource){
+          return $resource('/uniquegenre', null);
+        }])
+		
+		.factory('BooksFilteredByGenre', ['$resource', function($resource){
+          return $resource('/books/genre/:genre', null);
+        }])
+
+    //---------------
+    // Controllers
+    //---------------
+
+    .controller('TodoController', ['$scope', 'Todos', function ($scope, Todos) {
+	  $scope.editing = [];
+	  $scope.todos = Todos.query();
+	  $scope.save = function(){
+		if(!$scope.newTodo || $scope.newTodo.length < 1) return;
+		var todo = new Todos({ name: $scope.newTodo, completed: false });
+		todo.$save(function(){
+		  $scope.todos.push(todo);
+		  $scope.newTodo = ''; // clear textbox
+		});
+	  }
+	  $scope.update = function(index){
+		var todo = $scope.todos[index];
+		Todos.update({id: todo._id}, todo);
+		$scope.editing[index] = false;
+	  }
+	  $scope.edit = function(index){
+		$scope.editing[index] = angular.copy($scope.todos[index]);
+	  }
+	  $scope.cancel = function(index){
+		$scope.todos[index] = angular.copy($scope.editing[index]);
+		$scope.editing[index] = false;
+	  }
+	  $scope.remove = function(index){
+		  var todo = $scope.todos[index];
+		  Todos.remove({id: todo._id}, function(){
+			$scope.todos.splice(index, 1);
+		  });
+		}
+	}])
+	
+	.controller('BookController', ['$scope', 'Books', 'BooksGenre', function ($scope, Books, BooksGenre) {
+	  $scope.books = Books.query();
+	  $scope.genres = BooksGenre.query();
+	}])
+	
+	.controller('BookGenreController', ['$scope', 'BooksFilteredByGenre', 'BooksGenre', function ($scope, BooksFilteredByGenre, BooksGenre) {
+	  $scope.books = BooksFilteredByGenre.query();
+	  $scope.genres = BooksGenre.query();
+	}])
+	
+	.controller('BookDetailController', ['$scope', '$routeParams', 'Books', '$location', function ($scope, $routeParams, Books, $location) {
+	  $scope.book = Books.get({id: $routeParams.id });
+	  console.log('Test', $routeParams.id);
+	  $scope.update = function(){
+		Books.update({id: $scope.book._id}, $scope.book, function(){
+		  $location.url('/');
+		});
+	  }
+	  
+	  $scope.remove = function(){
+		  Books.remove({id: $scope.book._id}, function(){
+			$location.url('/');
+		  });
+		}
+	}])
+
+    //---------------
+    // Routes
+    //---------------
+
+    .config(['$routeProvider', function ($routeProvider) {
+      $routeProvider	  
+	   .when('/', {
+          templateUrl: '/books.html',
+          controller: 'BookController'
+        })
+		.when('/:id', {
+          templateUrl: '/bookDetails.html',
+          controller: 'BookDetailController'
+        });
+    }]);
+</script>
+
+</body>
+</html>
