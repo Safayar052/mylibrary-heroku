@@ -4,6 +4,13 @@ A barebones Node.js app using [Express 4](http://expressjs.com/), [MongoDB](http
 
 This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) .
 
+## Important links
+
+```
+https://dashboard.heroku.com/apps/mylibrary-safayar
+https://cloud.mongodb.com/v2/58d2890fd383ad5bbe514238#clusters
+```
+
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
