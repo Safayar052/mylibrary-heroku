@@ -1,6 +1,6 @@
 # Test project to learn MEAN
 
-A barebones Node.js app using [Express 4](http://expressjs.com/), [MongoDB] (https://www.mongodb.com/), [AngularJS] (https://angularjs.org/).
+A barebones Node.js app using [Express 4](http://expressjs.com/), [MongoDB](https://www.mongodb.com/), [AngularJS](https://angularjs.org/).
 
 This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) .
 
