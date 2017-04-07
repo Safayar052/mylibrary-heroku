@@ -1,16 +1,16 @@
-# node-js-getting-started
+# Test project to learn MEAN
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+A barebones Node.js app using [Express 4](http://expressjs.com/), [MongoDB] (https://www.mongodb.com/), [AngularJS] (https://angularjs.org/).
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) .
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
 ```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
+$ git clone https://github.com/Safayar052/mylibrary-heroku.git # or clone your own fork
+$ cd mylibrary-heroku
 $ npm install
 $ npm start
 ```
