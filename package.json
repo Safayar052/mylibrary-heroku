@@ -10,9 +10,12 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
     "ejs": "2.4.1",
     "express": "4.13.3",
-    "mongodb": "^2.2.25"
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.3"
   },
   "repository": {
     "type": "git",
